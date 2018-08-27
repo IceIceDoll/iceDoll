@@ -1,42 +1,34 @@
 <template>
-  <div class="container" @click="clickHandle('test click', $event)">
+  <div class="container" @click="toggleVerticalDialog">
 
-    <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
-      </div>
-    </div>
-
-    <div class="usermotto">
-      <div class="user-motto">
-        <card :text="motto"></card>
-      </div>
-    </div>
-
-    <form class="form-container">
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
-    </form>
   </div>
 </template>
 
 <script>
 import card from '@/components/card'
-
+import ZanDialog from '../../components/zan/dialog'
 export default {
+  components: {
+    ZanDialog, card
+  },
   data () {
     return {
       motto: 'Hello World',
-      userInfo: {}
+      userInfo: {},
+      zanDialog: {
+        'name': '',
+        'show': false,
+        'title': '',
+        'content': '',
+        'buttons': [],
+        'buttonsShowVertical': true,
+        res: {}
+      }
     }
   },
 
-  components: {
-    card
-  },
-
   methods: {
+    ...ZanDialog.methods,
     bindViewTap () {
       const url = '../logs/main'
       wx.navigateTo({ url })
@@ -55,6 +47,30 @@ export default {
     },
     clickHandle (msg, ev) {
       console.log('clickHandle:', msg, ev)
+      this.toggleVerticalDialog()
+    },
+    toggleVerticalDialog () {
+      console.log(11)
+      const obj = {
+        title: '弹窗',
+        content: '这是一个模态弹窗',
+        buttonsShowVertical: true,
+        buttons: [{
+          text: '现金支付',
+          color: 'red',
+          type: 'cash'
+        }, {
+          text: '微信支付',
+          color: '#3CC51F',
+          type: 'wechat'
+        }, {
+          text: '取消',
+          type: 'cancel'
+        }]
+      }
+      this.showZanDialog(obj).then(({type}) => {
+        console.log('=== dialog with vertical buttons === type: ' + type)
+      })
     }
   },
 
