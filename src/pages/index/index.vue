@@ -1,6 +1,6 @@
 <template>
   <div class="container" @click="toggleVerticalDialog">
-
+    <ZanDialog v-bind="zanDialog"/>
   </div>
 </template>
 
@@ -52,19 +52,19 @@ export default {
     toggleVerticalDialog () {
       console.log(11)
       const obj = {
-        title: '弹窗',
-        content: '这是一个模态弹窗',
+        title: '奇遇',
+        content: '该如何抉择呢?',
         buttonsShowVertical: true,
         buttons: [{
-          text: '现金支付',
+          text: '救她',
           color: 'red',
           type: 'cash'
         }, {
-          text: '微信支付',
+          text: '无视她',
           color: '#3CC51F',
           type: 'wechat'
         }, {
-          text: '取消',
+          text: '容我再想想',
           type: 'cancel'
         }]
       }

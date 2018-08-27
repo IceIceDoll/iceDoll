@@ -12,6 +12,7 @@ export default {
 </script>
 
 <style>
+@import "./assets/style/zanui.wxss";
 .container {
   height: 100%;
   display: flex;
